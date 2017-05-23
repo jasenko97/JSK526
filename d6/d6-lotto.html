@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<title>LOTTO 6 aus 45</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+	// jQuery ist da!
+
+	// $( HTMLNode )
+	// $( 'CSS Selektor' )
+	// => jQuery Objekt != HTMLNode
+
+	/*
+	var p1Node = document.getElementById( 'page1' );
+	var p1jQ = $( '#page1' );
+
+	p1jQ = $( p1Node );
+	p1Node = p1jQ.get(0);
+	p1Node = pqjQ[0];
+	*/
+
+
+
+		$( document ).ready( function() {
+			$( '#page2' ).hide();
+
+			for ( var i = 1; i<= 12; i++ ) {
+				$( '#page1 select' ).append(
+					$( '<option>' ).attr('value',i).html( i )
+				);
+			}
+
+			$( 'button' ).click( function() {
+				$( '#page1,#page2' ).toggle();
+			});
+
+			$( '#page1 button' ).click( function() {
+				var anzahl = $( '#page1 select' ).val();
+
+
+				var table = $( '<table border="1">' );
+				var tr = $( '<tr>' );
+				var td = $( '<td>' );
+
+				var zahlen = [1,5,8];
+
+				for ( var i = 1; i<=45; i++ ) { // 45xTDs machen
+					if ( i % 6 == 1 ) { // wann ein neues TR erzeugen
+						tr = $( '<tr>' );
+						table.append(tr);
+					}
+					td = $( '<td>' )
+								.html( i )
+								.css('background',zahlen.indexOf(i)!=-1?'red':'');
+								
+					tr.append(td);
+				}
+
+				$('#tipps').empty().append(table);
+
+			});
+
+
+		});
+	</script>
+
+	<style>
+		body > div { border:1px solid #000; padding:20px; margin:20px; width:500px; }
+		/*#page2 { display:none; }*/
+		/*#page1 { /*visibility: hidden;*/ /*opacity:0.5;*/ /*position:absolute; left:-9999px; }*/
+	</style>
+</head>
+<body>
+		<div id="page1">
+			<h1>Wie viele Tipps?</h1>
+			<select>
+
+			</select>
+
+			<button>zur Ausgabe</button>
+		</div>
+		<div id="page2">
+			<h1>Ausgabe</h1>
+			<div id="tipps"></div>
+			<button>zur Eingabe</button>
+		</div>
+</body>
+</html>
