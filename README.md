@@ -15,5 +15,26 @@
   * JSON (parse, stringify)
 
 Beispiele
-- 
--
+- Calculator
+- Lotto 6 aus 45 (Tipp-Generator)
+
+HÜ
+- Calculator mit jQuery umsetzen
+- Lotto fertigstellen
+
+### TAG 7 (29.5.2017, C513)
+- JS Sprachkern
+  * Funktionen
+  * Objekte, JSON
+
+- jQuery
+  * Methoden, DOM Manipulation
+  * Plugin
+
+- Funktionalität
+  * localStorage
+  * JSON (parse, stringify)
+
+Beispiele
+- Newsticker
+- Date Input

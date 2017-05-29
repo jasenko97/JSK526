@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	var i;
+	var m = ['Jan.','Feb.','März','Apr','Mai','Juni','Juli','Aug.','Sept.','Okt.','Nov.','Dez.'];
+	for ( i=1; i<=31; i++ ) {
+		$( '<option>' ).attr('value',i).html(i).appendTo( '#d' );
+	}
+	for ( i=1; i<=12; i++ ) {
+		$( '<option>' ).attr('value',i).html(m[i-1]).appendTo( '#m' );
+	}
+	for ( i=2017; i>=1900; i-- ) {
+		$( '<option>' ).attr('value',i).html(i).appendTo( '#y' );
+	}
+});
+
+var checkDate = function(y,m,d) {
+	var date = new Date(y,m-1,d);
+	if ( d == date.getDate() && m == date.getMonth()+1 &&
+	y == date.getFullYear() ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+$( document ).on( 'click', '#btn_check', function() {
+	var d = $('#d').val()*1;
+	var m = $('#m').val()*1;
+	var y = $('#y').val()*1;
+
+	if ( checkDate(y,m,d) ) {
+		alert( 'ok' );
+
+		var age18 = new Date( y+18,m-1,d );
+		var today = new Date();
+		//var today = Date.now();
+		if ( today < age18 ) {
+			alert( 'zu jung für Javascript!' );
+		} else {
+			alert( 'Super...' );
+		}
+
+
+	} else {
+		alert( 'error' );
+	}
+
+});
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem; }
+	</style>
+</head>
+<body>
+	<select id="d"></select> .
+	<select id="m"></select> .
+	<select id="y"></select>
+	<button id="btn_check">enter restricted area</button>
+</body>
+</html>

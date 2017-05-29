@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<title>LOTTO 6 aus 45</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+  var randy = function(m,n) { return Math.floor( Math.random() * (n-m+1) )+m; }
+
+  $( document ).ready( function() {
+    $( '#page2' ).hide();
+
+    for ( var i = 1; i<= 12; i++ ) {
+      $( '#page1 select' ).append(
+        $( '<option>' ).attr('value',i).html( i )
+      );
+    }
+
+    $( 'button' ).click( function() {
+      $( '#page1,#page2' ).toggle();
+    });
+
+    $( '#page1 button' ).click( function() {
+      var i, j, tr, table, anzahl = $( '#page1 select' ).val();
+      $( '#tipps' ).empty();
+
+      for (j=1; j<=anzahl; j++) {
+
+    	  table = $( '<table border="1">').appendTo( '#tipps' );
+
+      	for ( i=1; i<=45; i++ ) {
+      		if ( i%6 == 1 ) {
+      			tr = $('<tr>').appendTo( table );
+      		}
+
+      		tr.append(
+      			$( '<td>').attr('data-i',i).html( i )
+      		);
+      	}
+
+        // get 6 random numbers
+        do {
+          $( '[data-i="'+randy(1,45)+'"]', table).addClass('selected');
+        } while( $('.selected', table).length < 6 );
+
+      } // tables
+
+    });
+
+  });
+	</script>
+
+	<style>
+		body > div { border:1px solid #000; padding:20px; margin:20px; width:500px; }
+    table { float:left; margin:0 20px 20px 0; }
+    #tipps::after {display:block; content:''; clear:left; }
+    .selected {background:#ccc;}
+	</style>
+</head>
+<body>
+		<div id="page1">
+			<h1>Wie viele Tipps?</h1>
+			<select>
+
+			</select>
+
+			<button>zur Ausgabe</button>
+		</div>
+		<div id="page2">
+			<h1>Ausgabe</h1>
+			<div id="tipps"></div>
+			<button>zur Eingabe</button>
+		</div>
+</body>
+</html>

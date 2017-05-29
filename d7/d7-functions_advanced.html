@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+	<title>Funktionen in JS</title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+	var p1 = 2;
+	var p2 = 5;
+
+	var x = 0, y = '';
+
+  x+=1;
+	y+=1;
+
+	console.log( x,y );
+
+	x+=1;
+
+	y*=1; // wandelt string in number
+	y+=1;
+	y+=''; // wandelt number in string
+
+	//'100px' * 1 // NaN
+	//parseInt( '100px' ) => 100
+
+	console.log( x,y );
+
+	function meinF1(p1) {
+		var lokaleVar;
+
+		var interneF1 = function() {
+			console.log( p1 );
+		}
+		interneF1();
+		p1++;
+		return p1;
+	}
+
+	var meinF2 = function() {
+
+	}
+
+	// Aufruf
+	p2 = meinF1(p2);
+	console.log( 'p2', p2 );
+	meinF2();
+
+ console.log( '-----' );
+ // IIFE
+var g1 = 1;
+
+(function(i1) {
+	//var i1 = g1;
+	i1 += 5;
+}(g1));
+
+var klickerFunktion = function() {
+	console.log( i ); // i gibt es hier nicht
+}
+
+$( document ).ready( function() {
+	var i;
+	for ( i=1; i<=5; i++ ) { // Schleife
+		(function(i1) { // IIFE
+			//var i1 = i;
+			$( '<a href="#">' )
+				.html( i1 )
+				.on( 'click', function() {
+					console.log( i1 );
+				})
+				.appendTo( 'body');
+		}(i)); // call IIFE
+	}
+	console.log( 'Schleife Ende', i );
+});
+
+//(function(i1){ /*..*/ }(i));
+
+// Closure
+var multiply = function(a,b) {
+	return a*b;
+}
+
+multiply(3,5); //15
+
+var multiply5 = function(a) {
+	return multiply(a,5);
+}
+
+multiply5(3); // 15
+
+// start closure
+var multiplyX = function( b ) {
+	return function( a ) {
+		return a*b;
+	}
+}
+/*var m5 = multiplyX(5);
+var m6 = multiplyX(6);*/
+var m7 = multiplyX(7);
+m7( 10 );
+
+
+// Callback
+var f = function(a,b,callback) {
+	var result = a * b;
+	callback( result );
+}
+
+f( 9,3,function( p ){ console.log('Ergebnis',p); } );
+
+setTimeout( function() {
+	console.log( 'nach 1s' );
+}, 1000 );
+
+/*
+$( document ).ready( function() {
+	$( 'button' ).on( 'click', function() {
+		console.log( 'geklickt' );
+	});
+});
+*/
+
+$( document ).on( 'click', 'button', function() {
+	console.log( 'geklickt' );
+});
+
+/*
+$( document ).on( 'click', 'a', function( e ) {
+	//e.preventDefault();
+	alert( this.href );
+	//return false;
+})
+*/
+
+// Konstruktor
+var F = function(a,b) {
+	var k = 5;
+	this.x = a;
+	this.y = b;
+	this.z = a*b;
+	this.m = function() {}
+}
+
+var o = new F( 4,6 );
+var o2 = new F(7,3 );
+
+console.log( 'Objekt', o );
+
+// Objekt {}
+
+	</script>
+	<style>
+	a { margin:10px; }
+	</style>
+</head>
+<body>
+<button>Klick mich</button><br>
+<a href="http://www.wifiwien.at">WIFI Wissen ist für immer!</a><br>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+// Birthdate-Objekt
+var birthdate = {
+	d:0,
+	m:0,
+	y:0,
+	node:'',
+	monthsNamesShort:['Jan.','Feb.','März','Apr','Mai','Juni','Juli','Aug.','Sept.','Okt.','Nov.','Dez.'],
+	generateSelects: function( node ) {
+		var i;
+		this.node = node;
+		$( this.node ).html( '<select class="d"></select> .	<select class="m"></select> .	<select class="y"></select><button class="btn_check">enter restricted area</button>' );
+
+		for ( i=1; i<=31; i++ ) {
+			$( '<option>' ).attr('value',i).html(i).appendTo( '.d' );
+		}
+		for ( i=1; i<=12; i++ ) {
+			$( '<option>' ).attr('value',i).html(this.monthsNamesShort[i-1]).appendTo( '.m' );
+		}
+		for ( i=2017; i>=1900; i-- ) {
+			$( '<option>' ).attr('value',i).html(i).appendTo( '.y' );
+		}
+		$( document ).on( 'click', '.btn_check', this.saveBirthDate.bind(this) );
+	},
+	checkDate:function() {
+		var date = new Date(this.y,this.m-1,this.d);
+		if ( this.d == date.getDate() && this.m == date.getMonth()+1 &&
+		this.y == date.getFullYear() ) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+	checkAge:function(age) {
+		var dateAge = new Date( this.y+age,this.m-1,this.d );
+		var today = new Date();
+		if ( today < dateAge ) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+	saveBirthDate: function() {
+		birthdate.d = $('.d').val()*1;
+		this.m = $('.m').val()*1;
+		this.y = $('.y').val()*1;
+		if ( this.checkDate() ) {
+			console.info( 'OK Date' );
+			if ( this.checkAge(18) ) {
+				console.info( 'Age fine, lets save the date...' );
+				console.log( JSON.stringify( birthdate ) );
+				localStorage.setItem( 'myBirthDate', JSON.stringify( birthdate ) );
+				top.location.reload();
+			} else {
+				console.warn( 'error Age' );
+				$( this.node ).addClass( 'err' );
+			}
+		} else {
+			console.warn( 'error Date' );
+			$( this.node ).addClass( 'err' );
+		}
+
+	},
+	restoreBirthDate: function() {
+		var locBirthDate = localStorage.getItem( 'myBirthDate' );
+		if ( locBirthDate ) {
+			locBirthDate = JSON.parse( locBirthDate );
+			this.d = locBirthDate.d;
+			this.m = locBirthDate.m;
+			this.y = locBirthDate.y;
+			$( '.d' ).val( this.d );
+			$( '.m' ).val( this.m );
+			$( '.y' ).val( this.y );
+
+			$( 'select' ).prop( 'disabled', true );
+			$( 'button' ).hide();
+			$( this.node ).append(
+				$( '<button>' ).html( 'Datum löschen' )
+					.on( 'click', function() {
+					localStorage.removeItem( 'myBirthDate' );
+					top.location.reload();
+				})
+			)
+
+		}
+
+
+	}
+};
+
+
+
+$( document ).ready( function() {
+	birthdate.generateSelects( 'body' );
+	birthdate.restoreBirthDate();
+});
+
+	</script>
+	<style>
+	* { font-size:1.25rem; }
+	.err select { border:1px solid red; }
+	</style>
+</head>
+<body>
+
+</body>
+</html>
