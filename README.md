@@ -34,12 +34,14 @@ Beispiele
 - Date Input
 
 ### TAG 8 (30.5.2017, C513)
+- Allgemeins
+  * PAP, flowchart
+  
 - jQuery
   * Methoden, DOM Manipulation
   * Plugin
 
 - Funktionalität
-  * setInterval
   * localStorage
 
 Beispiele
