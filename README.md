@@ -34,10 +34,6 @@ Beispiele
 - Date Input
 
 ### TAG 8 (30.5.2017, C513)
-- JS Sprachkern
-  * Funktionen
-  * Objekte, JSON
-
 - jQuery
   * Methoden, DOM Manipulation
   * Plugin
