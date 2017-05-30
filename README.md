@@ -27,14 +27,32 @@ HÜ
   * Funktionen
   * Objekte, JSON
 
+- Funktionalität
+  * JSON (parse, stringify)
+
+Beispiele
+- Date Input
+
+### TAG 8 (30.5.2017, C513)
+- JS Sprachkern
+  * Funktionen
+  * Objekte, JSON
+
 - jQuery
   * Methoden, DOM Manipulation
   * Plugin
 
 - Funktionalität
+  * setInterval
   * localStorage
-  * JSON (parse, stringify)
 
 Beispiele
+- Name speichern
 - Newsticker
-- Date Input
+
+HÜ
+- Applikation Userverwaltung
+  Anforderung: Tab-Navigation, Daten-Eingabe, Ausgabe-Tabelle
+  Daten: Vorname, Nachname, E-Mail, Geburtsdatum
+  Funktionen: Löschen, Ändern, Sortieren
+  Zusatzaufgabe: Filtern
