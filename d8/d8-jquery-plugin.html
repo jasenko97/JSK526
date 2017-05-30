@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+	// jQuery Plugin
+	;(function($){
+
+		$.fn.rot = function() {
+			this.css({ color:'red' });
+			return this; // transparente Methode
+		}
+
+		// Methode zum Einfärben von Text
+		// Farbe mit RGB Werten
+		// Elemente mit Klasse nocolor sollen nicht eingefärbt werden
+		$.fn.colorize = function( options ) {
+			var settings = $.extend({
+				r:0,
+				g:0,
+				b:0
+			}, options );
+
+			//var x = $.extend( obj1, obj2 )
+
+			// Beispiel: this  =  alle Absätze als jQuery Collection
+			return this.each( function() {
+				// Beispiel: this  = ein Absatz als HTMLNodeElement
+				// $(this) = ein Absatz als jQuery Objekt
+				if ( !$(this).hasClass( 'nocolor') ) {
+					$(this).css({
+						color:'rgb('+settings.r+','+settings.g+','+settings.b+')'
+					});
+				}
+
+			});
+
+		}
+
+	}(jQuery));
+	</script>
+	<script>
+	$( document ).ready( function() {
+
+		/*$( 'p' ).css({
+			color:'red'
+		});*/
+
+		$( 'p' ).rot().css({fontWeight:'bold'});
+		$( 'div > h2' ).rot();
+
+		$( 'p' ).colorize({r:150,g:150});
+		$( 'p:first-child' ).colorize({g:150,b:10});
+		$( 'h2' ).colorize({r:80,g:255});
+
+
+	});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+	<p>Hier steht Text</p>
+	<h2 class="nocolor">Ich bleibe wie ich bin</h2>
+	<div>
+		<h2>Überschrift</h2>
+		<p>Noch mehr Text</p>
+
+	</div>
+</body>
+</html>

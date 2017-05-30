@@ -7,9 +7,11 @@
 	<script>
 	$( document ).ready( function() {
 		// schau nach ob im localStorage ein username steht
-		var savedName = localStorage.getItem( 'username' );
-		if ( savedName ) {
-			$( '#output' ).html( 'Hallo '+savedName+'!' );
+		var savedData = localStorage.getItem( 'userdaten' );
+		if ( savedData ) {
+			//wandle es wieder in in Objekt zurück
+			savedData = JSON.parse( savedData );
+			$( '#output' ).html( 'Hallo '+ savedData.username +'!' );
 		}
 
 	});
@@ -17,9 +19,14 @@
 
 	$( document ).on( 'click', 'button', function(){
 		var eingabe = $( 'input' ).val();
+		var daten = {
+			username: eingabe			
+			/* hier können mehr sachen drin stehen */
+		};
+
 		if ( eingabe != '' ) {
 			// speichere eingabe lokal
-			localStorage.setItem( 'username', eingabe );
+			localStorage.setItem( 'userdaten', JSON.stringify(daten) );
 			alert( 'Gespeichert.' );
 			$( 'input' ).val(''); // leert das Eingabefeld
 		} else {
@@ -28,7 +35,7 @@
 	});
 
 	$( document ).on( 'click', 'a', function() {
-		localStorage.removeItem( 'username' ); // löscht ein Element
+		localStorage.removeItem( 'userdaten' ); // löscht ein Element
 		localStorage.clear(); // löscht alle Elemente
 	});
 

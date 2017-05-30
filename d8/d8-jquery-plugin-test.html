@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+	// jQuery Plugin
+
+
+	;(function($){
+
+		$.fn.cssOld = $.fn.css;
+
+		$.fn.css = function( options ) {
+			var settings = $.extend({
+			}, options );
+
+			return this.each( function() {
+				$(this).cssOld(settings).addClass('x')
+			});
+
+		}
+
+	}(jQuery));
+	</script>
+	<script>
+	/*console.log = function( s ) {
+		alert( s );
+	}*/
+	window.alert = function(s)  {
+		console.log(s);
+	}
+
+	var globale = 1;
+	function test() {
+		var globale = 2;
+		alert( globale );
+		alert( window.globale );
+	}
+
+	test();
+
+
+	$( document ).ready( function() {
+
+		$('p').css({color:'red'}).css({fontWeight:'bold'});
+		alert( 'Hallo Log' );
+	});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+	<p>Hier steht Text</p>
+	<h2 class="nocolor">Ich bleibe wie ich bin</h2>
+	<div>
+		<h2>Überschrift</h2>
+		<p>Noch mehr Text</p>
+
+	</div>
+</body>
+</html>

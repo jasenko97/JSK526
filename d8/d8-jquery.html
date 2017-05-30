@@ -7,16 +7,69 @@
 	<script>
 $( document ).ready( function() {
 
+	$( '#test1' ).on( 'click', function() { alert('klick1'); } );
+	$( '#test1' ).off( 'click' );
+	$( '#test1' ).on( 'click', function() { alert('klick2'); } );
 
+	$( '#test1' ).html( 'neuer <b>Text</b>' );
+
+	var button = $( '#test1' ).get(0); // HTMLNodeElement
+	button.innerHTML = 'Text?';
+	$( button ).html( 'jetzt <b>alles</b> gut' );
+/*
+	$( 'button' ).on( 'mouseover', function() {
+		$( this ).addClass( 'over' );
+	});
+	$( 'button' ).on( 'mouseout', function() {
+		$( this ).removeClass( 'over' );
+	});
+	*/
+	$( 'button' ).on( 'mouseover mouseout', function() {
+		$( this ).toggleClass( 'over' );
+	});
+
+	// Method Chaining
+	$( '#test2' )
+		.html( 'Button 2' )
+		.css( 'border','2px solid #000' )
+		.off( 'mouseover mouseout');
+
+	// transparente Methoden => Rückgabe selbe Objekt
+	$( '#test2' ).html( 'Button 2' );
+
+	// destruktive Methoden => Rückgabe ein anderes jQuery Objekt
+	$( '#test2' ).next().html( 'Button ?').prev().prev().html('!');
+
+  //terminierenden Methoden => Rückgabe irgendwas anderes
+	// $( '#test2' ).get(0)
+	// console.log( typeof $( '#test2' ).html() );
+	// console.log( typeof $( 'button' ).html( 'x' ) );
+
+	$( '#test3' ).css( 'background-color', 'red');
+	$( '#test3' ).css( 'font-size','20px');
+	$( '#test3' ).css( 'font-weight', 'bold');
+
+	$( '#test3' )
+		.css( 'background-color', 'red')
+		.css( 'font-size','20px')
+		.css( 'font-weight', 'bold');
+
+	$( '#test3' ).css({
+		backgroundColor:'red',
+		fontSize:20,
+		'font-weight':'bold'
+	});
 
 });
 	</script>
 	<style>
+	.over { background:rgba(255,255,0,1); }
 	</style>
 </head>
 <body>
 	<button id="test1">Klick mich</button>
 	<button id="test2">Klick mich auch</button>
 	<button id="test3">mich <b>auch</b></button>
+	
 </body>
 </html>

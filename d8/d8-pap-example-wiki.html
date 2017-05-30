@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+	window.onload = function() {
+		var i;
+		var div = document.getElementById( 'output' );
+		for( i=1; i<=100; i++) {
+			div.innerHTML += i + '<br>';
+			if ( i == 39 ) i = 61;
+		}
+
+}
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem; text-align:center; }
+	</style>
+</head>
+<body>
+	<div id="output"></div>
+</body>
+</html>

@@ -48,11 +48,12 @@ Beispiele
 
 Beispiele
 - Name speichern
-- Newsticker
+- Bsp A) Newsticker
+- Bsp B) EUR > USD (Kurs 1.11275)
 
 HÜ
 - Applikation Userverwaltung
-  Anforderung: Tab-Navigation, Daten-Eingabe, Ausgabe-Tabelle
-  Daten: Vorname, Nachname, E-Mail, Geburtsdatum
-  Funktionen: Löschen, Ändern, Sortieren
-  Zusatzaufgabe: Filtern
+  * Anforderung: Tab-Navigation, Daten-Eingabe, Ausgabe-Tabelle
+  * Daten: Vorname, Nachname, E-Mail, Geburtsdatum
+  * Funktionen: Löschen, Ändern, Sortieren
+  * Zusatzaufgabe: Filtern
