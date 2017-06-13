@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+/*
+	API Doku
+	Wert wird quadriert.
+
+	REQUEST: POST
+		x: INT
+
+	RESPONSE JSON
+		x2: INT
+
+*/
+
+window.onload = function() {
+	document.getElementById( 'btn' ).onclick = function() {
+		var _this = this;
+		_this.setAttribute( 'disabled', 'disabled' );
+
+		// Schicke Eingabe an den Server
+		var eingabe = document.getElementById( 'eingabe' ).value;
+
+		var request = new XMLHttpRequest();
+		request.open( 'POST', 'http://wifi.1av.at/526/x.php' );
+		request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		request.send( 'x='+eingabe );
+
+		request.onreadystatechange = function() {
+			if ( request.readyState == 4 ) {
+				var response = JSON.parse( request.responseText  );
+				alert( response.x2 );
+				_this.removeAttribute( 'disabled' );
+				document.getElementById( 'btn' ).removeAttribute( 'disabled' );
+			}
+		}
+
+	}
+}
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+
+	<input type="text" id="eingabe">
+	<button id="btn">Schick an den Server</button>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	//$( '#currencycalculator' ).hide();
+	$.ajax({
+		url:'http://wifi.1av.at/526/ecb.php',
+		success:function( xmlString ) {
+			// add options
+			var xml = $.parseXML( xmlString );
+			console.log( xmlString )
+			$( '[currency]' , xml ).each( function() {
+				var waehrung =  $(this).attr('currency');
+				var kurs  =  $(this).attr('rate');
+
+				//$( '<option>' ).html( waehrung).attr('value',kurs).appendTo( '#currencies' );
+
+				$( '#currencies' ).append(
+						$( '<option>' ).html( waehrung).attr('value',kurs)
+				);
+
+			})
+			$( '#currencycalculator' ).show();
+		}
+	});
+});
+
+$( document ).on( 'change', '#currencies', function() {
+	var kurs = $(this).val();
+	var eingabe = $('#input').val();
+	var umrechnung = eingabe * kurs;
+	$( '#output' ).html( umrechnung.toFixed(2) );
+})
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	#currencycalculator { display:none; }
+	</style>
+</head>
+<body>
+	<div id="currencycalculator">
+		EURO: <input type="text" id="input">
+		<select id="currencies"><option>Währung wählen...</option></select>
+		<span id="output"></span>
+	</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+	$( document ).ready( function() {
+		// TU WAS wenn fertig geladen ist...
+		//$( 'button:nth-child(1)' ).on( 'click', function() { })
+	});
+
+
+	$( document ).on( 'click', 'button:nth-child(1)', function() {
+		// Daten werden als GET an den Server geschickt
+		// zurückkommt ein JSON als STRING(bzw. HTML)
+		$.ajax({
+			url:'http://wifi.1av.at/526/r_get_html.php',
+			type:'GET',
+			data:{x:1},
+			dataType:'html',
+			success:function( response ) {
+				var daten = JSON.parse( response );
+				alert( daten.x );
+			}
+		});
+	});
+
+	$( document ).on( 'click', 'button:nth-child(2)', function() {
+		$.ajax({
+			url:'http://wifi.1av.at/526/r_post_html.php',
+			type:'POST',
+			data:{x:1},
+			dataType:'html',
+			success:function( response ) {
+				var daten = JSON.parse( response );
+				alert( daten.x );
+			}
+		});
+	});
+
+	$( document ).on( 'click', 'button:nth-child(3)', function() {
+		$.ajax({
+			url:'http://wifi.1av.at/526/r_post_json.php',
+			type:'POST',
+			data:{x:1},
+			dataType:'json', // Zeile nicht notwendig, weil PHP selbst Daten als JSON liefert
+			success:function( response ) {
+				alert( response.x );
+			}
+		});
+	});
+
+	$( document ).on( 'click', 'button:nth-child(4)', function() {
+		$.ajax({
+			url:'http://wifi.1av.at/526/r_json_json.php',
+			type:'POST',
+			contentType:'application/json',
+			data:JSON.stringify({x:1}),
+			dataType:'json', // Zeile nicht notwendig, weil PHP selbst Daten als JSON liefert
+			success:function( response ) {
+				alert( response.x );
+			}
+		});
+	});
+
+
+	$( document ).on( 'click', 'button:nth-child(5)', function() {
+		$.ajax({
+			url:'http://wifi.1av.at/526/r_get_jsonp.php',
+			type:'GET',
+			data:{x:1},
+			dataType:'jsonp',
+			jsonpCallback: 'nameOfCallbackFunction',
+			success:function( response ) {
+				alert( response.x );
+			}
+		});
+	});
+
+
+	$( document ).on( 'click', 'button:nth-child(6)', function() {
+		$.ajax({
+			url:'http://wifi.1av.at/526/ecb.php',
+			type:'GET',
+			dataType:'html',
+			success:function( response ) {
+				alert( response );
+			}
+		});
+	});
+
+/*
+MIMETYPE
+	text/html
+	text/css
+	text/javascript
+	application/json
+	video/mpeg
+	...
+*/
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+	<button>GET - HTML</button>
+	<button>POST - HTML</button>
+	<button>POST - JSON</button>
+	<button>JSON - JSON</button>
+	<button>GET - JSONP</button>
+
+	<button>ECB</button>
+
+</html>

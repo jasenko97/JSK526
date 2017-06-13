@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready(function() {
+	$( '#currencycalculator' ).hide(); // besser gleich im CSS!!!
+	$( '#input' ).val('');
+	$.ajax({
+		url:'http://wifi.1av.at/526/ecb.php',
+		success:function(d) {
+			//var xml = $.parseXML( d ); // liefer XML
+			var ecb = $( d );
+			//var usd = ecb.find( '[currency="USD"]').attr('rate');
+			$( 'Cube Cube Cube', ecb ).each(function() {
+					$( '<option>')
+						.attr('value', $(this).attr('rate') )
+						.html( $(this).attr('currency') )
+						.appendTo( '#currencies');
+			});
+			$( '#currencycalculator' ).show();
+		}
+	});
+});
+
+$( document ).on( 'change', '#currencies', function() {
+	var value = $( '#input' ).val();
+	if( isNaN(value) || value*1 == 0 ) {
+		$(this).val('');
+		$( '#input' ).val('')
+	} else {
+		var result = value * $(this).val();
+		$( '#output' ).html( result.toFixed(2) );
+	}
+})
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+	<div id="currencycalculator">
+		EURO: <input type="text" id="input">
+		<select id="currencies"><option>Währung wählen...</option></select>
+		<span id="output"></span>
+	</div>
+</body>
+</html>

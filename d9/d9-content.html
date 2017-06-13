@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+var loadPage = function( i ) {
+	$( '.active' ).removeClass( 'active' );
+	$( '[data-page="'+i+'"]' ).addClass( 'active' );
+	$.ajax({
+		url:'http://wifi.1av.at/526/content-page-'+i+'.php',
+		success:function( d ) {
+			$( '#maincontent' ).html( d );
+		}
+	});
+};
+
+$( document ).on( 'click', 'a[data-page]', function(e) {
+	e.preventDefault();
+	loadPage( $(this).attr('data-page') );
+});
+
+$( document ).ready( function() {
+		loadPage( 1 );
+});
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	#maincontent { border:1px solid #000; min-height:50px; padding:20px;   }
+	ul { list-style:none; display:flex; justify-content: flex-start; margin:0; padding:0; }
+	ul li { position:relative; top:1px;}
+	ul li	a {  border:1px solid #000; color:#000; text-decoration:none; display:inline-block; padding:10px 20px;
+		background:#ccc; border-radius:10px 10px 0 0; }
+	ul li a.active { border-bottom:1px solid #fff; background:#fff;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><a href="#" data-page="1">Seite 1</a></li>
+		<li><a href="#" data-page="2">Seite 2</a></li>
+		<li><a href="#" data-page="3">Seite 3</a></li>
+	</ul>
+	<div id="maincontent"></div>
+</body>
+</html>

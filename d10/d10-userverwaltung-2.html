@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<link rel="stylesheet" href="jquery-ui.theme.min.css">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	$( '#meineTabs' ).tabs(); // tabs ist ein jQuery Funktion/Plugin von UI
+});
+
+// ------ FORMULAR Eingabe ------------------------------------------------
+var ueberpruefeEingabe = function( welchesFeld, datenTyp, callbackFunktion ) {
+	 $.ajax({
+		url:'http://wifi.1av.at/526/userdata.php?function=check',
+		type:'POST',
+		data:{
+			type: datenTyp,
+			value: $( welchesFeld ).val()
+		},
+		success:callbackFunktion,
+		error:function() {
+			alert( 'Error'); // kommt nur wenn Verbindung zum Server fehlschlägt!
+		}
+	})
+}
+
+$( document ).on( 'submit', '#tab-eingabe form', function( event ) {
+	event.preventDefault();
+	ueberpruefeEingabe( '#vorname', 'string', function( antwort1) {
+		if ( antwort1.result == 'ok' ) {
+			ueberpruefeEingabe( '#nachname', 'string', function(antwort2) {
+				if ( antwort2.result == 'ok' ) {
+					ueberpruefeEingabe( '#email', 'email', function(antwort3) {
+						if ( antwort3.result == 'ok' ) {
+							ueberpruefeEingabe( '#geburtsdatum', 'date', function(antwort4) {
+								if ( antwort4.result == 'ok' ) {
+									alert( 'Alles OK!' );
+								}
+							});
+						}
+					});
+				}
+
+			});
+		}
+
+	} );
+
+
+});
+	</script>
+</head>
+<body>
+<div id="meineTabs">
+	<ul>
+		<li><a href="#tab-eingabe">Daten eingeben</a></li>
+		<li><a href="#tab-ausgabe">Daten ausgeben</a></li>
+	</ul>
+	<div id="tab-eingabe">
+		<form action="?">
+			Vorname <input type="text" id="vorname"><br>
+			Nachname <input type="text" id="nachname"><br>
+			E-Mail <input type="text" id="email"><br>
+			Geburtsdatum <input type="text" id="geburtsdatum"><br>
+			<button>Neuen Benutzer anlegen</button>
+		</form>
+	</div>
+	<div id="tab-ausgabe">Hier ist Ausgabe</div>
+</div>
+</body>
+</html>

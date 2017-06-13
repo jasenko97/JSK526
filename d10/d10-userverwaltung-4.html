@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<link rel="stylesheet" href="jquery-ui.theme.min.css">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script>
+
+
+$( document ).ready( function() {
+	$( '#meineTabs' ).tabs({
+ 		activate: function( event, ui ) {
+			var idTab =  ui.newTab.find('a').attr('href');
+			if ( idTab == '#tab-ausgabe') {
+				$.ajax({
+					url:'http://wifi.1av.at/526/userdata.php?function=get&name=alex',
+					success:function( response ) {
+						users = response.data.users; // kommt so vom Server
+						var table, tr, td;
+						$( '#table' ).empty(); // mach div leer
+						table = $( '<table border="1">' ).appendTo( '#table' );
+						table.append( $('<tr><th>Vorname</th><th>Nachname</th><th>E-Mail</th><th>Geburtsdataum</th>'));
+						for (var i in users ) {
+							tr = $( '<tr>' ).appendTo( table );
+							tr
+								.append( $( '<td>').html( users[i].vorname ) )
+								.append( $( '<td>').html( users[i].nachname ) )
+								.append( $( '<td>').html( users[i].email ) )
+								.append( $( '<td>').html( users[i].geburtsdatum ) );
+						}
+
+
+					}
+				});
+			}
+		}
+
+	}); // tabs ist ein jQuery Funktion/Plugin von UI
+});
+
+// ------ FORMULAR Eingabe ------------------------------------------------
+var ueberpruefeEingabe = function( welchesFeld, datenTyp ) {
+	 return $.ajax({
+		url:'http://wifi.1av.at/526/userdata.php?function=check',
+		type:'POST',
+		async:true,
+		data:{
+			type: datenTyp,
+			value: $( welchesFeld ).val()
+		}
+	})
+}
+
+$( document ).on( 'submit', '#tab-eingabe form', function( event ) {
+	event.preventDefault();
+	var req1 = ueberpruefeEingabe( '#vorname', 'string');
+	var req2 = ueberpruefeEingabe( '#nachname', 'string');
+	var req3 = ueberpruefeEingabe( '#email', 'email');
+	var req4 = ueberpruefeEingabe( '#geburtsdatum', 'date');
+
+	$.when( req1, req2, req3, req4 ).done(
+		function( response1, response2, response3, response4 ) {
+
+			$( '.error' ).removeClass( 'error' );
+
+			if ( response1[0].result == 'err' ) {
+				$( '#vorname' ).addClass( 'error' );
+			}
+			if ( response2[0].result == 'err' ) {
+				$( '#nachname' ).addClass( 'error' );
+			}
+			if ( response3[0].result == 'err' ) {
+				$( '#email' ).addClass( 'error' );
+			}
+			if ( response4[0].result == 'err' ) {
+				$( '#geburtsdatum' ).addClass( 'error' );
+			}
+
+			if ( response1[0].result == 'ok'
+					&& response2[0].result == 'ok'
+					&& response3[0].result == 'ok'
+					&& response4[0].result == 'ok'
+				) {
+
+				//alert( 'alles ok' );
+				// Daten speichern!!!
+				var neuerUser = {
+					vorname:$('#vorname').val(),
+					nachname:$('#nachname').val(),
+					email:$('#email').val(),
+					geburtsdatum:$('#geburtsdatum').val()
+				};
+
+				$.ajax({
+					url:'http://wifi.1av.at/526/userdata.php?function=save&name=alex',
+					type:'POST',
+					data:{value:JSON.stringify(neuerUser)},
+					success:function( response ) {
+						if ( response.result == 'ok' ) {
+							alert( 'Daten gespeichert.');
+							$( "#meineTabs" ).tabs( "option", "active", 1 ); // zeige 2. Tab an
+						} else {
+							alert( 'Ojeh... Error...');
+						}
+					}
+				}); // end of ajax
+			} // alles ok if
+		}); // done
+});// end of submit
+
+// ------ Delete all ------------------------------------------------
+$( document ).on( 'click', '#alleLoeschen', function() {
+	$.ajax({
+		url:'http://wifi.1av.at/526/userdata.php?function=empty&name=alex',
+		success:function( response ) {
+			if ( response.result == 'ok' ) {
+				alert( 'Daten gelöscht.');
+
+				// refresh den aktuellen Tab
+				$( "#meineTabs" )
+					.tabs( "option", "active", 0 )
+					.tabs( "option", "active", 1 );
+			}
+		}
+	}); // end of ajax
+
+});
+
+	</script>
+	<style>
+	.error { background:red; }
+	table tr > * { padding:5px; }
+	</style>
+</head>
+<body>
+<div id="meineTabs">
+	<ul>
+		<li><a href="#tab-eingabe">Daten eingeben</a></li>
+		<li><a href="#tab-ausgabe">Daten ausgeben</a></li>
+	</ul>
+	<div id="tab-eingabe">
+		<form action="?">
+			Vorname <input type="text" id="vorname"><br>
+			Nachname <input type="text" id="nachname"><br>
+			E-Mail <input type="text" id="email"><br>
+			Geburtsdatum <input type="text" id="geburtsdatum"><br>
+			<button>Neuen Benutzer anlegen</button>
+		</form>
+	</div>
+	<div id="tab-ausgabe">
+		<button id="alleLoeschen">Alle löschen</button>
+		<div id="table"></div>
+	</div>
+</div>
+</body>
+</html>

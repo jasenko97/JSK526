@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+/*
+	$.ajax() -> Request an den Server
+	1. URL 'http://wifi.1av.at/526/content-page-1.php'
+	2. DATEN + METHODE
+	3. RESPONSE -> success-Callback Funktion
+*/
+
+/*
+	@param welche => Zahl, welche Seite soll geladen werden? 1,2,oder 3
+*/
+var ladeSeiteninhalt = function( welche ) {
+	// AJAX
+	var urlVomServer = 'http://wifi.1av.at/526/content-page-'+welche+'.php';
+	$.ajax({
+		url: urlVomServer,
+		success: function( antwortHTML ) {
+			$( '#maincontent' ).html( antwortHTML );
+		}
+	});
+	$( '.active' ).removeClass( 'active' );
+	$( 'a[data-page="'+welche+'"]' ).addClass( 'active' );
+}
+
+// -----------------------------------------------------------------------
+
+$( document ).ready( function() {
+	// wenn Seite geöffnet wird bzw. fertig geladen ist.
+	// selbes wie window.onload
+	ladeSeiteninhalt( 2 ); // welche wird 1
+});
+
+// -----------------------------------------------------------------------
+
+$( document ).on( 'click', 'a[data-page]', function( klickEvent ) {
+	klickEvent.preventDefault(); // mach nicht das was der Link so tut sondern nur JS
+	var nummerSeiteVomGeklicktenLink = $( this ).attr( 'data-page' ); // 1,2 od 3
+	ladeSeiteninhalt( nummerSeiteVomGeklicktenLink );
+});
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	#maincontent { border:1px solid #000; min-height:50px; padding:20px;   }
+	ul { list-style:none; display:flex; justify-content: flex-start; margin:0; padding:0; }
+	ul li { position:relative; top:1px;}
+	ul li	a {  border:1px solid #000; color:#000; text-decoration:none; display:inline-block; padding:10px 20px;
+		background:#ccc; border-radius:10px 10px 0 0; }
+	ul li a.active { border-bottom:1px solid #fff; background:#fff;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><a href="http://www.orf.at" data-page="1">Seite 1</a></li>
+		<li><a href="#" data-page="2">Seite 2</a></li>
+		<li><a href="#" data-page="3">Seite 3</a></li>
+	</ul>
+	<div id="maincontent"></div>
+
+</body>
+</html>

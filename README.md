@@ -36,7 +36,7 @@ Beispiele
 ### TAG 8 (30.5.2017, C513)
 - Allgemeins
   * PAP, flowchart
-  
+
 - jQuery
   * Methoden, DOM Manipulation
   * Plugin
@@ -55,3 +55,26 @@ HÜ
   * Daten: Vorname, Nachname, E-Mail, Geburtsdatum
   * Funktionen: Löschen, Ändern, Sortieren
   * Zusatzaufgabe: Filtern
+
+### TAG 9 (13.6.2017, C513)
+  - Funktionalität
+    * AJAX (Methoden, Datentypen, Callback)
+
+  Beispiele
+  - AJAX Test Request
+  - Währungsrechner (tagesaktuelle Kurse ECB)
+  - Tab-Navigation und Contentloader
+
+### TAG 10 (14.6.2017, C513)
+- JS Sprachkern
+  * OOP, Prototype
+
+- Funktionalität
+  * AJAX
+
+  Beispiele
+  - Tab-Navigation und Contentloader
+
+  HÜ
+  - Eingabe PLZ Ort mit Autocomplete
+   * http://wifi.1av.at/526/getplz.php?xml=all

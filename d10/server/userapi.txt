@@ -1,0 +1,37 @@
+Userverwaltung API
+
+http://wifi.1av.at/526/userdata.php
+
+-- CHECK FORM FIELDS -------------------------------
+
+GET
+  function:'check'
+POST
+  type:'string|number|date|email'
+  value: STR
+
+-- CHECK USER DATA -------------------------------
+
+GET
+  function:'check'
+  name: NAME
+POST
+  type:'exists'
+  value: STR
+
+-- SAVE USER DATA -------------------------------
+GET
+  function:'save'
+  name: NAME
+POST
+  value: JSON
+
+-- EMPTY USER DATA -------------------------------
+GET
+  function:'empty'
+  name: NAME
+
+-- GET USER DATA ---------------------------------
+GET
+  function:'get'
+  

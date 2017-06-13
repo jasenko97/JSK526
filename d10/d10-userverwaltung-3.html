@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="jquery-ui.min.css">
+	<link rel="stylesheet" href="jquery-ui.theme.min.css">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+	<script>
+$( document ).ready( function() {
+	$( '#meineTabs' ).tabs(); // tabs ist ein jQuery Funktion/Plugin von UI
+});
+
+// ------ FORMULAR Eingabe ------------------------------------------------
+var ueberpruefeEingabe = function( welchesFeld, datenTyp ) {
+	 $.ajax({
+		url:'http://wifi.1av.at/526/userdata.php?function=check',
+		type:'POST',
+		async:false, // mach es synchron und nicht asynchron
+		data:{
+			type: datenTyp,
+			value: $( welchesFeld ).val()
+		},
+		success:function( responseJSON ) {
+			// {"result":"ok"}
+			// {"result":"err","code":406}
+			if ( responseJSON.result == 'ok' ) {
+				alert( 'Eingabe OK' );
+			} else {
+				alert( 'Fehler: ' + responseJSON.code );
+			}
+		},
+		error:function() {
+			alert( 'Error'); // kommt nur wenn Verbindung zum Server fehlschlägt!
+		}
+	})
+}
+
+$( document ).on( 'submit', '#tab-eingabe form', function( event ) {
+	event.preventDefault();
+	ueberpruefeEingabe( '#vorname', 'string');
+	ueberpruefeEingabe( '#nachname', 'string');
+	ueberpruefeEingabe( '#email', 'email');
+	ueberpruefeEingabe( '#geburtsdatum', 'date');
+
+	alert( 'alle fertig.' );
+
+});
+	</script>
+</head>
+<body>
+<div id="meineTabs">
+	<ul>
+		<li><a href="#tab-eingabe">Daten eingeben</a></li>
+		<li><a href="#tab-ausgabe">Daten ausgeben</a></li>
+	</ul>
+	<div id="tab-eingabe">
+		<form action="?">
+			Vorname <input type="text" id="vorname"><br>
+			Nachname <input type="text" id="nachname"><br>
+			E-Mail <input type="text" id="email"><br>
+			Geburtsdatum <input type="text" id="geburtsdatum"><br>
+			<button>Neuen Benutzer anlegen</button>
+		</form>
+	</div>
+	<div id="tab-ausgabe">Hier ist Ausgabe</div>
+</div>
+</body>
+</html>
