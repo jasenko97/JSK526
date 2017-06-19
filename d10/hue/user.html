@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Tabs - Default functionality</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+// Birthdate-Objekt
+var birthdate = {
+	d:0,
+	m:0,
+	y:0,
+	node:'',
+	monthsNamesShort:['Jan.','Feb.','März','Apr','Mai','Juni','Juli','Aug.','Sept.','Okt.','Nov.','Dez.'],
+	generateSelects: function( node ) {
+		var i;
+		this.node = node;
+		$( this.node ).html( '<select class="d"></select> .	<select class="m"></select> .	<select class="y"></select>' );
+
+		for ( i=1; i<=31; i++ ) {
+			$( '<option>' ).attr('value',i).html(i).appendTo( '.d' );
+		}
+		for ( i=1; i<=12; i++ ) {
+			$( '<option>' ).attr('value',i).html(this.monthsNamesShort[i-1]).appendTo( '.m' );
+		}
+		for ( i=2017; i>=1900; i-- ) {
+			$( '<option>' ).attr('value',i).html(i).appendTo( '.y' );
+		}
+	},
+	checkDate:function() {
+		var date = new Date(this.y,this.m-1,this.d);
+		if ( this.d == date.getDate() && this.m == date.getMonth()+1 &&
+		this.y == date.getFullYear() ) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+	checkAge:function(age) {
+		var dateAge = new Date( this.y+age,this.m-1,this.d );
+		var today = new Date();
+		if ( today < dateAge ) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+	saveBirthDate: function() {
+		birthdate.d = $('.d').val()*1;
+		this.m = $('.m').val()*1;
+		this.y = $('.y').val()*1;
+		if ( this.checkDate() ) {
+				console.log( JSON.stringify( birthdate ) );
+        return true;
+		} else {
+			console.warn( 'error Date' );
+			//$( this.node ).addClass( 'err' );
+      return false;
+		}
+
+	}
+};
+
+var users = {all:[]};
+
+var saveUser = function() {
+  console.log(JSON.stringify(users));
+  localStorage.setItem( 'users', JSON.stringify(users) );
+  alert( 'Daten gespeichert.');
+}
+
+var loadUser = function() {
+  var locUsers = localStorage.getItem( 'users' );
+  if ( locUsers ) {
+    users = JSON.parse(locUsers);
+  }
+}
+
+
+
+$( document ).ready( function() {
+	birthdate.generateSelects( '#birthdate' );
+  $( "#tabs" ).tabs({
+    beforeActivate: function( event, ui ) {
+      switch( ui.newPanel.selector ) {
+        case '#tabs-1':
+        break;
+        case '#tabs-2':
+          $( '#tabs-2').html(
+            JSON.stringify( users )
+          );
+        break;
+      };
+    }
+  });
+});
+
+$( document ).on('click','#save', function() {
+  var user = {
+    firstname:$('#firstname').val(),
+    lastname:$('#lastname').val(),
+    email:$('#email').val(),
+    birthdate:$('#birthdate .y').val()+'-'+$('#birthdate .m').val()+'-'+$('#birthdate .d').val()
+  }
+
+  if ( user.firstname == '' || user.firstname == '' || user.email == '' || !birthdate.saveBirthDate() ) {
+    alert( 'Error Eingabe. Bitte Kontrolle.');
+  } else {
+    $('#firstname,#lastname,#email').val('');
+    $('#birthdate .y').val('2017');
+    $('#birthdate .m,#birthdate .d').val('1');
+    users.all.push(user);
+    saveUser();
+  }
+
+})
+
+
+  </script>
+  <style>
+  .err select { border:1px solid red; }
+  </style>
+</head>
+<body>
+
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Neuer User</a></li>
+    <li><a href="#tabs-2">User anzeigen</a></li>
+  </ul>
+  <div id="tabs-1">
+    <form>
+      Vorname: <input type="text" id="firstname"><br>
+      Nachname: <input type="text" id="lastname"><br>
+      E-Mail: <input type="text" id="email"><br>
+      Geburtsdatum: <span id="birthdate"></span><br>
+      <button id="save">Speichern</button>
+    </form>
+  </div>
+  <div id="tabs-2">
+      Show data...
+  </div>
+</div>
+
+
+</body>
+</html>

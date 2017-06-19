@@ -78,3 +78,14 @@ HÜ
   HÜ
   - Eingabe PLZ Ort mit Autocomplete
    * http://wifi.1av.at/526/getplz.php?xml=all
+
+## T3. Webapplikationen mit Javascript und HTML5
+### TAG 11 (19.6.2017, C513)
+- JS Sprachkern
+  * OOP, Prototype
+
+- HTML5
+  * SVG
+
+  Beispiele
+  - Fahrrad
