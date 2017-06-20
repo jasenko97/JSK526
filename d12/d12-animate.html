@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+
+ 	$( document ).ready( function() {
+		var s = $( 'span' );
+		s.animate({marginLeft:100},1000)
+		$(s.get(0)).animate({marginLeft:0},1000, function() {
+			console.log( '2. ende')
+		})
+		s.not(s.get(0)).animate({marginLeft:0},1000)
+	});
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	span { diplay:inline-block; }
+	</style>
+</head>
+<body>
+	<div>
+		<span>X</span><br>
+		<span>X</span>
+	<div>
+</body>
+</html>

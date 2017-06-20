@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="make-nice-checkbox.js"></script>
+	<script>
+	$( document ).ready( function() {
+		$( 'input[type=checkbox]').makeNiceCheckbox();
+	});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	canvas, label { vertical-align:middle; }
+	</style>
+</head>
+<body>
+	<input type="checkbox" id="js">
+	<label for="js">Javascript ist super.</label>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script>
+$( document ).ready( function() {
+
+	var ctx = $( '#meinbild' ).get(0).getContext( '2d' );
+	//var ctx = document.getElementById( 'meinbild' ).getContext( '2d' );
+
+	var image = new Image();
+	image.src = 'https://www.holidayguru.ch/wp-content/uploads/2015/02/malediven_sch%C3%B6n-686x429.jpg';
+
+	image.onload = function() {
+		//console.log( image.width, image.height );
+		//console.log( 'Faktor', 200 / image.width )
+		ctx.drawImage( image, 0,0, 200, 200/image.width * image.height );
+
+		ctx.strokeStyle = 'rgba(255,150,0,0.8)';
+		ctx.lineWidth = 8;
+
+		ctx.moveTo( 50, 50 );
+		ctx.lineTo( 100, 125);
+		ctx.lineTo( 200, 200 );
+		ctx.lineTo( 20, 150 );
+		ctx.lineTo( 0, 0 )
+		ctx.stroke();
+
+		ctx.beginPath();
+		ctx.moveTo( 100,100);
+		ctx.lineTo( 0,200 );
+		ctx.lineTo( 150,150 );
+		/*ctx.lineTo( 100, 100 );*/
+		ctx.strokeStyle = 'black';
+		ctx.lineWidth = 10;
+		ctx.closePath();
+		ctx.stroke();
+
+		ctx.fillStyle = 'rgba(0,0,0,0.5)';
+		ctx.fill();
+
+		ctx.fillStyle = 'red';
+		ctx.fillRect( 10,10,80,50 );
+
+		ctx.beginPath();
+		ctx.arc( 100, 100, 50, -0.5*Math.PI, 0.5*Math.PI);
+		ctx.lineWidth = 1;
+		ctx.stroke();
+
+		ctx.font = '30px Arial';
+		ctx.fillText( 'WIFI Wien', 0, 100 );
+		ctx.strokeText( 'WIFI Wien', 0, 200 );
+
+	} // onload ende
+
+
+});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	canvas { border:1px solid #000; box-shadow:0 0 5px rgba(0,0,0,0.5); }
+	</style>
+</head>
+<body>
+	<div>
+		<canvas width="200" height="200" id="meinbild"></canvas>
+	</div>
+
+</body>
+</html>

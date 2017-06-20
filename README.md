@@ -91,16 +91,11 @@ Beispiele
   - Fahrrad
 
 ### TAG 12 (20.6.2017, C513)
-- jQuery
-  * UI (Slider)
-
 - HTML5 + JS
   * Canvas
-  * Audio
 
 Beispiele
   - NiceCheckbox
-  - Audioplayer
 
 HÜ
 - Autorennen mit Canvas  

@@ -22,17 +22,20 @@ var Bike = function( options ) {
 		//fahrradSVG.get(0).dasObjekt = this; //NodeObjekt
 
 		this.svg = fahrradSVG;
-		this.svg.on( 'click', function(e) {
+		this.raceStarted = false; // erst wenn gestartet wird soll klicken gehen
+
+		// Klick on Bikes
+		this.svg.on('click', function(e) { // linke maustaste
+			if ( !this.raceStarted ) return;
 			this.speed++;
 		}.bind(this));
-		this.svg.on( 'contextmenu', function(e) {
-			e.preventDefault();
-			this.speed--;
+
+		this.svg.on('contextmenu', function(e) { // rechte maustaste
+			e.preventDefault(); // do not show contextmenu
+			if ( !this.raceStarted ) return;
+			this.speed = Math.max(0, --this.speed); // do not drive left!
 		}.bind(this));
-		/* ohne bind(this)
-		this.svg.on( 'click', function(e) {
-			$(this).data('dasObjekt').speed++;
-		}) */
+		// --- END Klick
 
 		$( '<div>' )
 			.append(fahrradSVG)
@@ -40,6 +43,10 @@ var Bike = function( options ) {
 
 		this.posX = 0;
 		this.move = function() {
+			/*this.speed -= 0.05;
+			if ( this.speed < 0 ) this.speed = 0;*/
+			this.speed = Math.max(0, this.speed-0.05 );
+
 			this.posX += this.speed;
 			this.svg.css({transform:'translate('+this.posX+'px,0)'})
 		};
@@ -63,10 +70,11 @@ $( document ).on( 'click', '#add', function() {
 });
 
 $( document ).on( 'click', '#start', function() {
-
+	$( '#add,#farbe,#start' ).hide();
 	$( '#rennbahnen svg' ).each( function() {
 		var aktuellesFahrrad = $( this ).data('dasObjekt');
-		aktuellesFahrrad.speed = 1;
+		aktuellesFahrrad.speed = 3; // start speed
+		aktuellesFahrrad.raceStarted = true; // jetzt kann man klicken
 	});
 
 });
