@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script>
+// OOP
+
+var o = {
+	a:1,
+	b:2,
+	m:function() {
+		console.log( 'o.m', this.a, this.b ); // this = Objekt o
+	}
+}
+
+o.m();
+
+var f =  function() {
+	console.log( 'f', this ); // was ist this ?
+}
+
+f(); // => this = window
+window.onload = function() {
+	document.getElementById( 'x' ).onclick = f.bind( o ); // this = #x
+	f.call( document.getElementById( 'x' ) ); // this = #x
+}
+
+// Konstruktorfunktion wie Klasse verwenden
+var K = function(p1, p2) {
+	this.a = p1; // this = das erzeugte Objekt!
+	this.b = p2;
+	this.m = function() {
+		console.log( 'K.m', this.a, this.b );
+	}
+	this.getName = function() { // gibt es bei o1 und o2
+		console.log( 'K.getName', this.name );
+	}
+}
+
+var o1 = new K( 3, 4);
+o1.m();
+var o2 = new K( 5, 6);
+o2.m();
+o2.name = 'Franz';
+o2.getName();
+o2.neueF = function() { // gibt es nicht bei o1
+	console.log( 'o2.neueF' )
+}
+o2.neueF();
+
+// ab jetzt gibt es m2!!
+K.prototype.m2 = function() {
+	console.log( 'K.m2', this.a );
+}
+
+o1.m2();
+o2.m2();
+
+var a = new Array( 1,2,3 );
+var a = [1,2,3];
+
+Array.prototype.getLast = function() {
+	return this[ this.length - 1];
+}
+window.alert = function(s) {
+	console.warn(s);
+}
+alert( a.getLast() );
+/*
+var getLast = function( arr ) {
+	return arr[ arr.length - 1];
+}
+alert( getLast( a ) );
+*/
+a.push( 4 );
+alert( a.getLast() );
+
+Array.prototype.push = function( x ) {
+	this[ this.length ] = x+1;
+}
+
+a.push( 5 );
+alert( a.getLast() );
+
+
+var user = [];
+user.push( 'Alex' );
+console.log( user );
+/*
+K.prototype.x = 5;
+alert( o1.x );
+*/
+var oBasis = {
+		ab:1,
+		mx:function() { console.log('oBasis.mx',this.ab); }
+};
+
+var p = Object.create( oBasis );
+var p2 = Object.create( oBasis );
+p.ab = 2;
+/*p2.ab = 3;*/
+oBasis.ab = 5;
+p.mx();
+console.log( 'hasOwn p', p.hasOwnProperty('ab') );
+
+p2.mx();
+console.log( 'hasOwn p2', p2.hasOwnProperty('ab') );
+
+console.log( 'hasOwn o1 > toString', o1.hasOwnProperty('toString') );
+
+var r1, r2, r3, r4;
+r1 = {};
+r2 = Object.create( {} );
+r3 = Object.create( Object.prototype );
+r4 = Object.create( null ); //
+
+Object.prototype.lustig = function() {
+	alert( 'LOL' );
+}
+
+console.log( r1,r2,r3,r4 );
+r1.lustig();
+r2.lustig();
+r3.lustig();
+//r4.lustig(); gibt es nicht
+f.lustig();
+o1.lustig();
+window.lustig();
+
+var y = { a:1, b:2, c:3 };
+
+var z = Object.create({},{
+	a:{
+		value:1,
+		writable:true,
+		enumerable:false
+	},
+	b:{
+		value:2,
+		writable:true,
+		enumerable:true
+	},
+	c:{
+		value:3,
+		writable:true,
+		enumerable:true
+	}
+});
+
+for (var i in y ) {
+	console.log( 'y', y[i] );
+}
+for (var i in z ) {
+	console.log( 'z', z[i] );
+}
+
+console.log( '---- ARRAY --- ') ;
+for ( i in a ) {
+	console.log( i, a[i] );
+}
+
+/* --- GET/SET --- */
+var mal2 = {
+	get a() { return this.val; },
+	set a( value ) { this.val = value*2; }
+}
+alert( mal2.a ); // get
+mal2.a = 5; // set
+alert( mal2.a ); // get
+
+/* --- ANWENDUNG --- */
+var Circle = function( radius ) {
+	this.radius = radius;
+}
+
+Object.defineProperty( Circle.prototype, 'umfang', {
+	get: function() { return 2*Math.PI*this.radius },
+	set: function(u) { this.radius = u/2/Math.PI; }
+});
+
+Object.defineProperty( Circle.prototype, 'flaeche', {
+	get: function() { return Math.PI*this.radius*this.radius }
+});
+
+var meinKreis = new Circle( 10 );
+console.log( 'umfang', meinKreis.umfang );
+console.log( 'flaeche', meinKreis.flaeche );
+
+meinKreis.umfang = 100;
+console.log( 'umfang 100', meinKreis.flaeche );
+
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	</style>
+</head>
+<body>
+	<button id="x">Klick mich</button>
+</body>
+</html>

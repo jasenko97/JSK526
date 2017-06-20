@@ -57,27 +57,27 @@ HÜ
   * Zusatzaufgabe: Filtern
 
 ### TAG 9 (13.6.2017, C513)
-  - Funktionalität
-    * AJAX (Methoden, Datentypen, Callback)
+- Funktionalität
+  * AJAX (Methoden, Datentypen, Callback)
 
-  Beispiele
-  - AJAX Test Request
-  - Währungsrechner (tagesaktuelle Kurse ECB)
-  - Tab-Navigation und Contentloader
+Beispiele
+- AJAX Test Request
+- Währungsrechner (tagesaktuelle Kurse ECB)
+- Tab-Navigation und Contentloader
 
 ### TAG 10 (14.6.2017, C513)
-- JS Sprachkern
-  * OOP, Prototype
+- jQuery
+  * UI (Tabs)
 
 - Funktionalität
   * AJAX
 
-  Beispiele
-  - Tab-Navigation und Contentloader
+Beispiele
+- Tab-Navigation und Contentloader
 
-  HÜ
-  - Eingabe PLZ Ort mit Autocomplete
-   * http://wifi.1av.at/526/getplz.php?xml=all
+HÜ
+- Eingabe PLZ Ort mit Autocomplete
+  * http://wifi.1av.at/526/getplz.php?xml=all
 
 ## T3. Webapplikationen mit Javascript und HTML5
 ### TAG 11 (19.6.2017, C513)
@@ -87,5 +87,20 @@ HÜ
 - HTML5
   * SVG
 
-  Beispiele
+Beispiele
   - Fahrrad
+
+### TAG 12 (20.6.2017, C513)
+- jQuery
+  * UI (Slider)
+
+- HTML5 + JS
+  * Canvas
+  * Audio
+
+Beispiele
+  - NiceCheckbox
+  - Audioplayer
+
+HÜ
+- Autorennen mit Canvas  

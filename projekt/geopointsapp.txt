@@ -1,0 +1,20 @@
+Projekttitel: GEO Punkte APP
+
+Admin Webinterface:
+- Desktop
+- Anlegen von Projekten inkl. Zugangsdaten, BEschreibung, etc.
+- Hinzufügen von Punkten zu einem Projekt über MAP (Google, Leaflet)
+- Eingabe von Punkt Koordinaten über mehrere Koord.systeme
+- Editieren/Löschen/etc.
+
+Native APP (PhoneGAP):
+- Auswahl Projekt + Eingabe Zugangsdaten
+- Auswahl Punkt/Marker (ggf. Anzeige mit Karte)
+- Anzeige Entfernung zum Marker
+- Nähe von 5m (konfigurierbar) Gerät Zeigt an Punkt erreicht, virbriert und spielt Sound
+- User kann Bild(er) machen und zum Marker uploaden
+
+Serverseite:
+- Idealfall NodeJS (kann aber auch anderes System sein)
+
+// Stand 20.6.2017, Alexander Vincenz
