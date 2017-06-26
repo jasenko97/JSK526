@@ -99,3 +99,30 @@ Beispiele
 
 HÜ
 - Autorennen mit Canvas  
+
+### TAG 13 (26.6.2017, C513)
+- jQuery
+  * UI (Slider)
+  * Animation
+
+- HTML5 + JS
+  * Audio
+
+- Funktionalität
+  * TTD mit QUnit
+
+Beispiele
+  - Audiplayer
+  - Spezieller Pythagoras
+  - Quizduell
+
+## weitere Inhalte
+- NodeJS
+- ES6
+- mobile Eventlistener
+- Restful Service
+- Sockets
+- Promise
+- CSS Sprite
+- ChromeAPP
+- PhoneGap
