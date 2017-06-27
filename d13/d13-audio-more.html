@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style-icons.css">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="uislider/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="uislider/jquery-ui.min.css">
+	<link rel="stylesheet" href="uislider/jquery-ui.theme.min.css">
+
+	<script>
+
+	$( document ).on( 'click', '.icon-play3', function() {
+		$( '.icon-play3, .icon-stop2 ').toggle();
+		for ( var i in myAudios ) {
+			myAudios[i].audio.play();
+		}
+	});
+	$( document ).on( 'click', '.icon-stop2', function() {
+		$( '.icon-play3, .icon-stop2 ').toggle();
+		for ( var i in myAudios ) {
+			myAudios[i].audio.pause();
+			myAudios[i].audio.currentTime = 0;
+		}
+	});
+
+	var myAudios;
+	var masterVolume = 0;
+	$( document ).ready( function() {
+		myAudios = [
+			{
+				'file':'drums.mp3',
+				'title':'Trommel'
+			},
+			{
+				'file':'guitar.mp3',
+				'title':'Gitarre'
+			},
+			{
+				'file':'organ.mp3',
+				'title':'Klimmbimm'
+			},
+		];
+		for ( var i in myAudios ) {
+			(function(i){
+				myAudios[i].audio = new Audio( 'audio/'+myAudios[i].file );
+				myAudios[i].audio.volume = 0;
+				myAudios[i].muted = true;
+				myAudios[i].audio.loop = true;
+				$( '#tonspuren' ).append(
+					$( '<div>' )
+						.append($( '<span class="icon-checkbox-unchecked">' )
+							.on( 'click', function() {
+								$(this).toggleClass( 'icon-checkbox-unchecked' );
+								$(this).toggleClass( 'icon-checkbox-checked' );
+								myAudios[i].muted = !myAudios[i].muted;
+								if ( myAudios[i].muted ) {
+									myAudios[i].audio.volume = 0;
+								} else {
+									myAudios[i].audio.volume = masterVolume / 100;
+								}
+							})
+						)
+						.append($( '<span>').html( myAudios[i].title ) )
+				)
+			}(i));
+		}
+
+		// Volume Slider
+		$( '#volume' ).slider({
+			orientation:'vertical',
+			value:masterVolume/100,
+			slide:function(event,ui) {
+				masterVolume = ui.value;
+				for ( var i in myAudios ) {
+					myAudios[i].audio.volume = myAudios[i].muted ? 0 : ui.value/100;
+				}
+			}
+
+		})
+
+	});
+
+
+
+	</script>
+	<style>
+	* { font-size:1.25rem; font-family:Arial; }
+	#volume { float:left; margin:20px 20px 5px 20px; height:80px;  }
+	#controls { padding:10px; }
+	#controls span { font-size:2em; margin:5px; cursor:pointer; padding:5px; border:1px solid #000; border-radius:15px; box-shadow:2px 2px 3px rgba(0,0,0,0.5); }
+	#controls span { color:#fff; background:#000; }
+	#tonspuren span { margin-right:5px; }
+	#controls .icon-play3 { padding:5px 3px 5px 7px; }
+	#controls .icon-stop2 { display:none; }
+	#tonspuren div { padding:5px 0; }
+	</style>
+</head>
+<body>
+	<div id="volume"></div>
+	<div id="tonspuren"></div>
+	<div id="controls">
+		<span class="icon-play3"></span>
+		<span class="icon-stop2"></span>
+	</div>
+</body>
+</html>

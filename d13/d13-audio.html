@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="uislider/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="uislider/jquery-ui.min.css">
+	<link rel="stylesheet" href="uislider/jquery-ui.theme.min.css">
+	<script>
+$( document ).on( 'click', '#play', function() {
+	var audioElement = $( '#drums' ).get(0);
+	audioElement.play();
+});
+$( document ).on( 'click', '#stop', function() {
+	var audioElement = $( '#drums' ).get(0);
+	audioElement.pause();
+	audioElement.currentTime = 0; // zum Anfang
+});
+
+var setVolume = function( i ) {
+	var audioElement = $( '#drums' ).get(0);
+	audioElement.volume = i / 100;
+}
+
+$( document ).ready( function() {
+	var audioElement = $( '#drums' ).get(0);
+	audioElement.loop = true;
+
+	var startVolume = 50;
+	setVolume( startVolume );
+
+	$( '#volume' ).slider({
+		orientation:'vertical',
+		value:startVolume,
+		slide:function(event,ui) {
+			setVolume( ui.value );
+		}
+	});
+
+	$( '#speed' ).slider({
+		orientation:'vertical',
+		value:1,
+		min:0.5,
+		max:2,
+		step:0.1,
+		slide:function(event,ui) {
+			//console.log( ui.value );
+			audioElement.playbackRate = ui.value;
+		}
+	});
+
+});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	div { margin:20px; float:left; }
+	</style>
+</head>
+<body>
+	<button id="play">Play</button>
+	<button id="stop">Stop</button>
+	<div id="volume"></div>
+	<div id="speed"></div>
+	<audio controls id="drums"><!-- autoplay loop -->
+		<source src="audio/drums.mp3" type="audio/mp3"><!-- MIME TYPE -->
+	</audio>
+</body>
+</html>

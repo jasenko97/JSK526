@@ -103,7 +103,6 @@ HÜ
 ### TAG 13 (26.6.2017, C513)
 - jQuery
   * UI (Slider)
-  * Animation
 
 - HTML5 + JS
   * Audio
@@ -114,10 +113,24 @@ HÜ
 Beispiele
   - Audiplayer
   - Spezieller Pythagoras
+
+### TAG 14 (27.6.2017, C513)
+- Funktionalität
+  * NodeJS
+
+- Frameworks
+  * Toastr
+
+- Wiederholung
+  * AJAX
+  * JSON
+  * Definition Serverschnittstelle
+  * OOP
+
+Beispiele
   - Quizduell
 
 ## weitere Inhalte
-- NodeJS
 - ES6
 - mobile Eventlistener
 - Restful Service

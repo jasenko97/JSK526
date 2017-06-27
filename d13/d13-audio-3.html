@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<script src="jquery-3.2.1.min.js"></script>
+	<script src="uislider/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="uislider/jquery-ui.min.css">
+	<link rel="stylesheet" href="uislider/jquery-ui.theme.min.css">
+	<script>
+$( document ).on( 'click', '#play', function() {
+		$( '#drums' ).get(0).play();
+		$( '#organ' ).get(0).play();
+		$( '#guitar' ).get(0).play();
+});
+$( document ).on( 'click', '#stop', function() {
+	$( '#drums' ).get(0).pause();
+	$( '#drums' ).get(0).currentTime = 0;
+	$( '#organ' ).get(0).pause();
+	$( '#organ' ).get(0).currentTime = 0;
+	$( '#guitar' ).get(0).pause();
+	$( '#guitar' ).get(0).currentTime = 0;
+});
+
+$( document ).on( 'click', '#cb_drums', function() {
+	// wenn gecheckt dann volume = 1 ansonsten 0
+	$( '#drums' ).get(0).volume = $( this ).is(':checked')?1:0;
+});
+$( document ).on( 'click', '#cb_organ', function() {
+	$( '#organ' ).get(0).volume = $( this ).is(':checked')?1:0;
+});
+$( document ).on( 'click','#cb_guitar',  function() {
+	$( '#guitar' ).get(0).volume = $( this ).is(':checked')?1:0;
+});
+$( document ).ready( function() {
+
+
+});
+	</script>
+	<style>
+	* { font-size:1.25rem;}
+	div { margin:20px; float:left; }
+	</style>
+</head>
+<body>
+	<button id="play">Play</button>
+	<button id="stop">Stop</button><br>
+	<input type="checkbox" id="cb_drums" checked> Drums: <audio id="drums" controls><source src="audio/drums.mp3"></audio><br>
+	<input type="checkbox" id="cb_organ" checked> Organ: <audio id="organ" controls><source src="audio/organ.mp3"></audio><br>
+	<input type="checkbox" id="cb_guitar" checked> Guitar: <audio id="guitar" controls><source src="audio/guitar.mp3"></audio>
+</body>
+</html>

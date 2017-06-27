@@ -17,7 +17,6 @@ var Bike = function( options ) {
 
 		var fahrradSVG = $( '#template svg' ).clone();
 		fahrradSVG.find( 'path' ).css({fill: this.farbe });
-
 		fahrradSVG.data('dasObjekt', this ); //jQuery
 		//fahrradSVG.get(0).dasObjekt = this; //NodeObjekt
 
