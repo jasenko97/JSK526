@@ -1,9 +1,12 @@
 <!doctype html>
 <html>
 <head>
-	<title></title>
+	<title>QUIZ</title>
 	<meta charset="utf-8">
 	<script src="jquery-3.2.1.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 	<script>
 	/*
 
@@ -19,6 +22,238 @@
 		$( '#bg' ).addClass( 'zoomHim' );
 	});
 
+	/*
+
+
+	SETUP für alle zukünftigen AJAX-Calls
+	In diesem Beispiel sind alle immer POST und gehen an die
+	selbe URL
+
+	*/
+	$.ajaxSetup({
+		url:'http://wifi.1av.at/526/quiz/quiz2.php',
+		type:'POST'
+	});
+
+
+	/*
+
+
+	GAME Objekt beinhaltet alle Variablen als Attribute
+	und Methoden, die im Spiel etwas machen
+
+
+	*/
+
+
+	var game = {
+		name:'', // speichere hier den Namen des Users
+		punkte:0, // merke dir die erreichten Punkte
+		level:1, // in welchem Level befindet sich er User gerade
+		maxlevel:5, // was ist das maximale Level
+		frageID:-1, // welche frageID habe ich gerade
+		time:0, // aktuelle Zeit während eine Frage am Screen sichtbar ist
+		interval:0, // Hilfsvariable für Interval
+		timePerQ: 5000, // konfigurieren der Dauer pro Fragen
+
+		/*
+
+		beim Laden
+		blende alle sections aus und zeige nur #s2 mit dem
+		Ladetext
+
+		*/
+		loading:function() {
+			$( 'section' ).hide();
+			$( '#s2' ).show();
+		},
+
+		/*
+
+		getQuestion holt eine neue Frage um aktuellen Level
+		und befüllt HTML, schalten Loading ein/aus und startet
+		Timer
+
+		*/
+		getQuestion:function() {
+
+			/* Aktiviere Ladescreen */
+			game.loading();
+
+			/* Request an den Server um eine neue Frage zum
+			aktuellen Level zu bekommen */
+			$.ajax({
+				data:{
+					type:'frageneu',
+					level:game.level
+				},
+				success:function(d) {
+					/* deaktiviere Ladescreen und Zeige Frage Screen */
+					$( '#s3, #s2' ).toggle();
+
+					/* merke ID der Frage, um später Antwort zu checken */
+					game.frageID = d.frageID;
+
+					/* Gib Frage in <h1> aus */
+					$( '#s3 h1' ).html( d.frage );
+
+					/* Antwort Buttons */
+					$( '#s3 button' )
+						/* Entferne Klassen von allen Buttons */
+						.removeClass( 'clicked answerTrue answerFalse')
+
+						/* Laufe alle Buttons durch und trage die Antwort aus dem Array ein*/
+						.each( function(i) {
+							$(this)
+								.html( d.antworten[i] )
+								.attr('data-answer',i); // gib ein HTML data-Attribut um später bei Klick die ID der Antwort zu erhalten */
+						})
+						.on('click', function() {
+							/* wenn auf einen Button geklickt wurde füge Klasse hinzu */
+							$(this).addClass( 'clicked' );
+
+							/* weiteres Klicken verhindern */
+							$( '#s3 button' ).off( 'click' );
+
+							/* beende Progress */
+							clearInterval( game.interval );
+
+							/* überprüfe Antwort am Server */
+							game.checkAnswer( $(this).attr( 'data-answer' ) );
+						});
+
+						/* Starte Progress-Bar Timer */
+						clearInterval( game.interval );
+						game.time = game.timePerQ;
+						game.interval = setInterval( game.progress, 40 );
+
+				} // end success
+			}); // ajax
+		}, // getQuestion-Ende
+		/*
+
+
+		endGame
+		Zeigt den letzten Screen an und schreibt in Highscore und zeigt
+		HTML vom Server an
+
+
+		*/
+		checkAnswer:function(i) {
+			$.ajax({
+				data:{
+					type:'check',
+					level:game.level,
+					frageID:game.frageID,
+					antwort:i*1+1
+				},
+				success:function(d){
+					/* gib Button die Klasse answerTrue oder answerFalse */
+					$( '.clicked' ).addClass(  d.checkOK ? 'answerTrue' : 'answerFalse' );
+
+					/* Färbe die richtige Antwort ein, auch wenn nicht geklickt wurde */
+					$( 'button[data-answer="'+(d.correctAntwort*1-1)+'"]').addClass( 'answerTrue' );
+
+					/* zum nächsten Level */
+					game.level++;
+
+					/* wenn richtig addiere verbleibende Zeit zu den Punkten */
+					if ( d.checkOK ) { game.punkte+=game.time; }
+
+					/* bei falscher Antwort oder maxLevel erreicht gehe zum Ende sonst
+					lade eine weitere Frage */
+					if ( game.level > game.maxlevel || !d.checkOK ) {
+						setTimeout( game.endGame, 2000 );
+					} else {
+						setTimeout( game.getQuestion, 2000 );
+					}
+
+				}
+			});
+
+
+		},
+		/*
+
+
+		endGame
+		Zeigt den letzten Screen an und schreibt in Highscore und zeigt
+		HTML vom Server an
+
+
+		*/
+		endGame:function() {
+			$( '#s3, #s4' ).toggle();
+			$.ajax({
+				data:{type:'writehighscore',ms:game.punkte,name:game.name},
+				success:function(d){
+					$('#s4 div').html( d.html );
+				}
+			})
+		},
+		/*
+
+		Funktion die den Progress-Bar Progress ändert in einem interval
+		Beim Ende wird Ende aufgerufen keine weitere Frage mehr
+
+		*/
+		progress:function() {
+				game.time-=40;
+				if ( game.time < 0 ) {
+					clearInterval( game.interval );
+					game.endGame();
+				} else {
+					$( 'progress' ).val( 100 * game.time/game.timePerQ );
+				}
+			}
+
+	} // game-Objekt Ende
+
+	/*
+
+
+	Starte Quiz
+	Überprüfe ob etwas im Feld Name steht
+	Wenn ja dann als Name speichern und eine Frage holen
+
+
+	*/
+	$( document ).on( 'click', '#s1 button', function(e) {
+		e.preventDefault();
+		game.name = $( '#s1 input' ).val();
+		if ( game.name.length < 3 ) {
+			alert( 'Armin will wissen, wie du heisst!' );
+		} else {
+			game.getQuestion();
+		}
+	});
+
+
+	/*
+
+
+	leere Eingabfeld, wenn Seite geladen wird
+
+
+	*/
+	$( document ).ready( function() {
+		$( '#s1 input' ).val('');
+	});
+
+	/*
+
+
+	verwende toastr und ersetze Standard-Funktion alert
+	http://codeseven.github.io/toastr/demo.html
+
+	*/
+	window.alert = function( text ) {
+		toastr.options = {
+			positionClass: 'toast-top-center',
+			preventDuplicates: true,
+		};
+		toastr.error( text );
+	}
 
 
 
@@ -52,6 +287,11 @@ button.answerTrue { background:rgba(0,255,0,0.35); }
 button.answerFalse { background:rgba(255,0,0,0.35); }
 #q { max-width:50%; margin:0 auto; }
 #s3 button { width:20%; height:3.5em; }
+
+@media all and (max-width:1000px) {
+	#s3 button { width:75%; }
+}
+
 	</style>
 </head>
 <body>
@@ -82,5 +322,6 @@ button.answerFalse { background:rgba(255,0,0,0.35); }
 	<div>
 	</div>
 </section>
+</div>
 </body>
 </html>

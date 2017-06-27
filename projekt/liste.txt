@@ -1,0 +1,8 @@
+Adrian: Battle Tetris mit Sockets
+Jasenko: Trinkwasser Lokalisierung
+Oliver: Restaurant Booking Applikation
+Martin: GeoApp mit PhoneGap
+Galip:
+Paul: Audio Location App Player
+Murlo: Wetterdaten Applikation mit Charts
+Schiwa: Vokabellern-Applikation mit Mikrofon/Aufzeichnung
