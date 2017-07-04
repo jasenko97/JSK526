@@ -134,18 +134,36 @@ Beispiele
 - Funktionalität
   * NodeJS
   * RESTFUL Service
-  * Sockets
 
 - Frameworks
   * GoogleMap
 
 Beispiele
+  - Userdaten mit Restful Webservice
   - Koordinaten
-  - Chat
 
-## weitere Inhalte
-- ES6
-- mobile Eventlistener
-- CSS Sprite
-- ChromeAPP
-- PhoneGap
+### TAG 16 (4.7.2017, C513)
+- HTML5
+  * CSS Sprites
+
+- Funktionalität
+  * ES6 Überblick
+  * Touch Events
+
+- Frameworks
+  * GoogleMap
+  * Cordova mit PhoneGap
+
+Beispiele
+  - Userdaten mit Restful Webservice
+  - Koordinaten
+
+### weitere Themen
+- ChromeAPP: https://developer.chrome.com/apps/first_app
+- ES6: http://es6-features.org/#Constants
+- CSS Sprites: https://css-tricks.com/css-sprites/
+- OrientDB: https://orientdb.com/docs/2.1/Javascript-Driver.html
+- D3: https://d3js.org/
+- Three.js: https://threejs.org/
+- Phaser.js: https://phaser.io/
+- jQueryMobile: https://jquerymobile.com/
