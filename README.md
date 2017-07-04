@@ -111,7 +111,7 @@ HÜ
   * TTD mit QUnit
 
 Beispiele
-  - Audiplayer
+  - Audioplayer
   - Spezieller Pythagoras
 
 ### TAG 14 (27.6.2017, C513)
@@ -130,12 +130,22 @@ Beispiele
 Beispiele
   - Quizduell
 
+### TAG 15 (3.7.2017, C513)
+- Funktionalität
+  * NodeJS
+  * RESTFUL Service
+  * Sockets
+
+- Frameworks
+  * GoogleMap
+
+Beispiele
+  - Koordinaten
+  - Chat
+
 ## weitere Inhalte
 - ES6
 - mobile Eventlistener
-- Restful Service
-- Sockets
-- Promise
 - CSS Sprite
 - ChromeAPP
 - PhoneGap

@@ -2,7 +2,7 @@ Adrian: Battle Tetris mit Sockets
 Jasenko: Trinkwasser Lokalisierung
 Oliver: Restaurant Booking Applikation
 Martin: GeoApp mit PhoneGap
-Galip:
-Paul: Audio Location App Player
+Galip: Passwort Generator & Verwaltungs Tool
+Paul: Ambient Supplimenter mit GeoDaten Erfassung
 Murlo: Wetterdaten Applikation mit Charts
-Schiwa: Vokabellern-Applikation mit Mikrofon/Aufzeichnung
+Schiwa: Vokabel-Lern-Applikation mit Mikrofon/Aufzeichnung
